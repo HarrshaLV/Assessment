@@ -19,22 +19,12 @@ df = pd.read_csv('/content/Mall_Customers.csv')
 df.head()
 
 
-
-"""# a
-
-
-"""
-
 df.fillna(df.mean(), inplace=True)
 
 df['Age_Income_Ratio'] = df['Age'] / df['Annual Income (k$)']
 
 scaler = StandardScaler()
 scaled_data = scaler.fit_transform(df[['Age', 'Annual Income (k$)', 'Spending Score (1-100)', 'Age_Income_Ratio']])
-
-"""#b
-
-"""
 
 #Elbow and silhouette
 inertia_values = []
@@ -61,10 +51,6 @@ plt.title('Silhouette Scores for Optimal k value')
 plt.xticks(k_values)
 plt.show()
 
-"""#c
-
-"""
-
 optimal_k = 7
 kmeans = KMeans(n_clusters=optimal_k, random_state=42)
 kmeans.fit(scaled_data)
@@ -74,16 +60,12 @@ cluster_labels = kmeans.predict(scaled_data)
 silhouette_avg = silhouette_score(scaled_data, cluster_labels)
 print("**********************************SILHOUETTE SCORE*************************\n ",silhouette_avg)
 
-"""#d
-
-"""
-
 df['Cluster'] = kmeans.labels_
 cprofiles = df.groupby('Cluster').mean()
 print(cprofiles)
 
 """
-### We can target high value products to people in the 32 age group because they have the highest spending score
+### Strategy Development: We can target high value products to people in the 32 age group because they have the highest spending score
 
 ### To increase the possibility of a customer purchasing a product, we can group the product with appropriate price range which can be promoted to their corresponding age group cluster
 """
